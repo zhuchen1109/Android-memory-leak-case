@@ -287,7 +287,7 @@ AsyncTask线程 => 静态的ThreadLocal的RunQueue => Runnable => ProgressBar =>
 
 附上MAT内存泄露的实例分析图：
 
-(https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)
+![Android-memory-leak-case](https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)
 
 附上把 Thread.sleep(500)注释去掉后的MAT内存的实例分析图：
-(https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%97%A0%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)
+![Android-memory-leak-case](https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%97%A0%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)
