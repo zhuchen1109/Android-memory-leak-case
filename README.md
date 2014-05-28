@@ -285,6 +285,9 @@ AsyncTask线程 => 静态的ThreadLocal的RunQueue => Runnable => ProgressBar =>
 ```
 现象是:TextView 很大概率不会显示 "AsyncTask： 1" 文字； 而把 Thread.sleep(500)注释去掉后，一切ok!
 
-附上MAT内存实例分析图：
+附上MAT内存泄露的实例分析图：
 
-(https://raw.github.com/umano/AndroidSlidingUpPanelDemo/master/slidinguppanel.png)
+(https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)
+
+附上把 Thread.sleep(500)注释去掉后的MAT内存的实例分析图：
+(https://raw.githubusercontent.com/zhuchen1109/Android-MAT/master/screenshot/MAT%E5%86%85%E5%AD%98%E6%97%A0%E6%B3%84%E9%9C%B2%E6%88%AA%E5%9B%BE.jpg)

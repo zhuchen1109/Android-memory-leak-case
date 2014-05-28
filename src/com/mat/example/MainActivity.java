@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 			protected Void doInBackground(TextView... params) {
 				try {
 					TextView tv = params[0];
-					// Thread.sleep(500);
+//					 Thread.sleep(500);
 					for (int i = 1; i <= 3; ++i) {
 						doSomeHeavyWork(tv, "AsyncTask: " + i);
 						Thread.sleep(1000);
