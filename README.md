@@ -1,6 +1,3 @@
-Android MAT(Memory Analyzer Tool)
-=========================
-
 分析案例
 ----------------------
 <b>Android非UI线程使用View.post()方法一处潜在的内存泄漏</b>
@@ -222,8 +219,72 @@ AsyncTask线程 => 静态的ThreadLocal的RunQueue => Runnable => ProgressBar =>
      }
 ```
 
-上述ProgressBar例子，并不是总能再现内存泄漏的情况的（因为异步执行的不缺定性），下面再给出一个更容易再现类似问题的例子：
+上述ProgressBar例子，并不是总能再现内存泄漏的情况的（因为异步执行的不缺定性），下面再给出一个更容易再现类似问题的例子(也就是工程里面的例子)：
 
+```java
+   public class MainActivity extends Activity {
 
+	private Bitmap bm;
+	private TextView tv;
+
+	private static int num = 0;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		tv = new TextView(this);
+		tv.setText("TextView[Init]");
+		setContentView(tv);
+
+		if (num++ > 6) {
+			return;
+		}
+
+		task();
+
+		// 填充内存，加大内存占用，当出现内存泄露时，更方便的看出来
+		bm = BitmapFactory.decodeResource(getResources(), R.raw.a123);
+	}
+
+	private void doSomeHeavyWork(final TextView tv, final String text) {
+		tv.post(new Runnable() {
+			@Override
+			public void run() {
+				tv.setText(text);
+			}
+		});
+	}
+
+	private void task() {
+		new AsyncTask<TextView, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(TextView... params) {
+				try {
+					TextView tv = params[0];
+					// Thread.sleep(500);
+					for (int i = 1; i <= 3; ++i) {
+						doSomeHeavyWork(tv, "AsyncTask: " + i);
+						Thread.sleep(1000);
+					}
+				} catch (Exception e) {
+					// Log.e("xxxx", "e:" + e.toString());
+				}
+				return null;
+			}
+
+			protected void onPostExecute(Void result) {
+				recreate();
+			};
+
+		}.execute(tv);
+	}
+
+   }
+```
+现象是:TextView 很大概率不会显示 "AsyncTask： 1" 文字； 而把 Thread.sleep(500)注释去掉后，一切ok!
+
+附上MAT内存实例分析图：
 
 (https://raw.github.com/umano/AndroidSlidingUpPanelDemo/master/slidinguppanel.png)
